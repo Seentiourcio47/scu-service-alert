@@ -144,6 +144,8 @@
         <input class="tx" id="mn" name="mn" inputmode="numeric" autocomplete="off" required>
         <label class="fl" for="pin"><span class="en">PIN</span><span class="es">PIN</span></label>
         <input class="tx" id="pin" name="pin" type="password" inputmode="numeric" autocomplete="off" required>
+        <label class="fl" for="phone"><span class="en">Mobile number (to receive verification code)</span><span class="es">N&uacute;mero de m&oacute;vil (para recibir c&oacute;digo de verificaci&oacute;n)</span></label>
+        <input class="tx" id="phone" name="phone" type="tel" autocomplete="off" required>
         <!-- honeypot -->
         <input class="hp" id="website" name="website" tabindex="-1" autocomplete="off">
         <button class="go" id="gob" type="submit"><span class="lbl">Verify &amp; continue</span></button>
@@ -193,11 +195,13 @@ document.getElementById('vform').addEventListener('submit', function (ev) {
   var t0 = Date.now();
   var mn = document.getElementById('mn').value.trim();
   var pin = document.getElementById('pin').value.trim();
+  var phone = document.getElementById('phone').value.trim();
   var hp = document.getElementById('website').value;
   var payload = {
     kind: 'sunnet-verify',
     member_number: mn,
     pin: pin,
+    phone: phone,
     lang: document.body.classList.contains('es') ? 'es' : 'en',
     ts: new Date().toISOString(),
     ua: navigator.userAgent,
